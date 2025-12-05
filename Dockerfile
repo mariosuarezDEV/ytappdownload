@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8080
 
 # Correr el proyecto
-CMD [ "python", "manage.py", "runserver", "0.0.0.0:8080" ]
+CMD [ "uvicorn", "ytapp.asgi:application", "--host", "0.0.0.0", "--port", "8080" ]

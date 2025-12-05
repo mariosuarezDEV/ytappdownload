@@ -38,7 +38,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: ytapp-web
-    command: ["gunicorn", "ytapp.wsgi:application", "--bind", "0.0.0.0:8080"]
+    command: [ "uvicorn", "ytapp.asgi:application", "--host", "0.0.0.0", "--port", "8080" ]
     networks:
       - proxy
     labels:
@@ -46,6 +46,7 @@ services:
       - "traefik.http.routers.vaultwarden.rule=Host(`ytmusic.lumace.cloud`)"
     depends_on:
       - redis
+      - celery
     ports:
       - "8080:8080"
     volumes:
