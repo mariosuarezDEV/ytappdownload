@@ -139,3 +139,5 @@ CELERY_TIMEZONE = "America/Mexico_City"
 # celery -A folder worker --loglevel=info
 
 ALLOWED_HOSTS = ["ytmusic.lumace.cloud", "localhost"]
+
+CSRF_TRUSTED_ORIGINS = ["https://ytmusic.lumace.cloud"]
