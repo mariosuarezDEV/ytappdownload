@@ -4,6 +4,9 @@ FROM python:3.12.12-alpine3.23
 # 2. Crear espacio de trabajo en el contenedor
 WORKDIR /app
 
+# Instalar las dependencias del sistema
+RUN apk add --no-cache ffmpeg
+
 # 3. Pasar el archivo de dependencias para instalarlas posteriormente
 COPY requirements.txt .
 RUN pip install -r requirements.txt
