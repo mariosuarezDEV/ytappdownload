@@ -43,12 +43,11 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.vaultwarden.rule=Host(`ytmusic.lumace.cloud`)"
+      - "traefik.http.routers.web.rule=Host(`ytmusic.lumace.cloud`)"
+      - "traefik.http.services.web.loadbalancer.server.port=8080"
     depends_on:
       - redis
       - celery
-    ports:
-      - "8080:8080"
     volumes:
       - /mnt/hdd1/samba/ytapp:/app/media/audio
       - ./:/app
