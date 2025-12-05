@@ -137,3 +137,5 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "America/Mexico_City"
 # celery -A folder worker --loglevel=info
+
+ALLOWED_HOSTS = ["ytmusic.lumace.cloud", "localhost"]
