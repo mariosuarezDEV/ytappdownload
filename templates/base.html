@@ -1,0 +1,21 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YT App Download</title>
+  </head>
+  <body class="bg-body-tertiary">
+    {% include 'components/navbar.html' %}
+    <div class="container-fluid mt-4 p-4">
+      {% bootstrap_messages %}
+      {% block content %}
+
+      {% endblock %}
+    </div>
+    <script src="https://kit.fontawesome.com/f89f8ae43b.js" crossorigin="anonymous"></script>
+  </body>
+</html>

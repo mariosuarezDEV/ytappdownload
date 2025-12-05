@@ -1,0 +1,58 @@
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis-ytapp
+    networks:
+      - proxy
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru"]
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ytappdownload-celery
+    command: ["celery", "-A", "ytapp", "worker", "--loglevel=info", "--concurrency=2", "--max-tasks-per-child=50"]
+    depends_on:
+      - redis
+    networks:
+      - proxy
+    volumes:
+      - ./:/app
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ytapp-web
+    command: ["gunicorn", "ytapp.wsgi:application", "--bind", "0.0.0.0:8080"]
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vaultwarden.rule=Host(`ytmusic.lumace.cloud`)"
+    depends_on:
+      - redis
+    ports:
+      - "8080:8080"
+    volumes:
+      - /mnt/hdd1/samba/ytapp:/app/media/audio
+      - ./:/app
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true
